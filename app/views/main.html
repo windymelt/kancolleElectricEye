@@ -1,0 +1,75 @@
+<div class="container-fluid" ng-controller="PortCtrl">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a ng-href="#">総合</a></li>
+        <li><a href="#/report/">報告</a></li>
+        <li><a href="#">状況</a></li>
+        <li><a href="#">Export</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="">入渠ドック<span class="badge">{{fleetsFixDockCount}}</span></a></li>
+        <li><a href="">建造ドック</a></li>
+        <li><a href="">ほげほげ</a></li>
+        <li><a href="">Another nav item</a></li>
+        <li><a href="">More navigation</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="">Nav item again</a></li>
+        <li><a href="">One more nav</a></li>
+        <li><a href="">Another nav item</a></li>
+      </ul>
+    </div>
+
+    <div class="col-sm-9 col-md-10 marketing container-fluid" ng-controller="PortCtrl">
+  <div ng-if="!proxyProblem && needReload" class="jumbotron">
+    <h1><span class="glyphicon glyphicon-refresh"></span>Please reload</h1>
+    <p class="lead">「艦これ」ページをリロードしてください。</p>
+  </div>
+
+  <div ng-if="proxyProblem" class="jumbotron">
+    <h1><span class="glyphicon glyphicon-question-sign"></span>Proxy problem</h1>
+    <p class="lead">Couldn't connect to the proxy. Please check your proxy and browser configuration and reload this page.</p>
+    </button>
+  </div>
+
+  <h4>Kanmusu</h4>
+  <p>
+    <div class="container-fluid">
+      teitoku: {{teitokuName}}
+      <div class="row">
+        <div class="col-md-3 panel panel-success" ng-repeat="dock in docks">
+          <div class="panel-heading">
+            <h4 class="panel-title">{{dock.name}}</h4>
+          </div>
+          <div class="panel-body">
+            <div ng-repeat="fleet in dock.ships">
+              {{fleet.name}} (lv. {{fleet.lv}})
+              <span ng-if="fleet.needFuelSupply" class="label label-warning">Fuel</span>
+              <span ng-if="fleet.needAmmoSupply" class="label label-warning">Ammo</span>
+              <div class="progress">
+                <div ng-if="fleet.isOnFix" class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
+                     aria-valuemin="0" aria-valuemax="100" style="width: {{fleet.hpPercent}}%;">
+                  {{fleet.hpPercent}}% - {{fleet.fixTime}}
+                </div>
+                <div
+                   ng-class="{'progress-bar-danger': fleet.hpPercent < 33, 'progress-bar-warning': fleet.hpPercent >= 33 && fleet.hpPercent < 75}"
+                   ng-if="!fleet.isOnFix" class="progress-bar" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
+                   aria-valuemin="0" aria-valuemax="100" style="width: {{fleet.hpPercent}}%;">
+                  {{fleet.hpPercent}}%
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </p>
+  <h4>Messages</h4>
+  <div class="container-fluid">
+    <ul class="list-group">
+      <li ng-repeat="log in logs" class="list-group-item">{{log.message}}
+    </ul>
+  </div>
+
+</div>
