@@ -36,46 +36,16 @@ angular.module('kanColleViewerMomiApp')
       function renderPort () {
           if (SharedObject.portJson == null) { return; }
 
-          $scope.teitokuName = SharedObject.portJson.api_data.api_basic.api_nickname;
-
+          $scope.teitokuName = getTeitokuName(SharedObject.portJson);
           $scope.logs = generateLogArray(SharedObject.portJson);
-
-          var docks = [];
-          SharedObject.portJson.api_data.api_deck_port.forEach(
-              function (dock) {
-                  var ships = [];
-                  var dockObj = new Object();
-                  dock.api_ship.forEach(
-                      function (shipNo) {
-                          var ship = ShipMap.getFleetFromPort(shipNo);
-                          var shipData = new Object();
-                          if (ship === undefined) { return; }
-                          var shipStatus = ShipMap.fetchShipStatus(ship.api_ship_id);
-
-                          shipData.hpPercent = ship.api_nowhp / ship.api_maxhp * 100;
-                          shipData.id = ship.api_id;
-                          shipData.shipId = ship.api_ship_id;
-                          shipData.name = shipStatus.api_name;
-                          shipData.lv = ship.api_lv;
-                          shipData.isOnFix = ShipMap.isOnFix(ship.api_id);
-                          if (shipData.isOnFix) { shipData.fixTime = shipData.isOnFix.api_complete_time_str; }
-
-                          var maxFuel = shipStatus.api_fuel_max;
-                          var maxAmmo = shipStatus.api_bull_max;
-                          shipData.needFuelSupply = ship.api_fuel < maxFuel;
-                          shipData.needAmmoSupply = ship.api_bull < maxAmmo;
-                          ships.push(shipData);
-                      });
-                  dockObj.ships = ships;
-                  dockObj.name = dock.api_name;
-                  docks.push(dockObj);
-              });
-          $scope.docks = docks;
-
+          $scope.docks = generateDockArray(SharedObject.portJson);
           $scope.fleetsFixDockCount = ShipMap.countFleetsOnFix();
-          console.log($scope.fleetsFixDockCount + " ships are on fix.");
 
           $scope.$apply();
+      }
+
+      function getTeitokuName (portJson) {
+          return portJson.api_data.api_basic.api_nickname;
       }
 
       function generateLogArray (portJson) {
@@ -87,6 +57,52 @@ angular.module('kanColleViewerMomiApp')
               logObj.message = log.api_message;
               logArray.push(logObj);
           });
+
           return logArray;
+      }
+
+      function generateDockArray (portJson) {
+          var docks = [];
+          portJson.api_data.api_deck_port.forEach(function (dock) {
+              var dockObj = new Object();
+              dockObj.name = dock.api_name;
+
+              var girls = [];
+              dock.api_ship.forEach(function (shipNo) {
+                  var individualFleetData = ShipMap.getFleetFromPort(shipNo);
+                  var herData = generateFleetObjectFromAPIFleet(individualFleetData);
+                  if (herData !== undefined) {girls.push(herData);}
+              });
+              dockObj.ships = girls;
+              docks.push(dockObj);
+          });
+
+          return docks;
+      }
+
+      function generateFleetObjectFromAPIFleet (her) {
+          if (her === undefined) { return undefined; }
+
+          var herData = new Object();
+
+          herData.hpPercent = her.api_nowhp / her.api_maxhp * 100;
+          herData.id = her.api_id;
+          herData.shipId = her.api_ship_id;
+          herData.lv = her.api_lv;
+
+          var shipStatus = ShipMap.fetchShipStatus(her.api_ship_id);
+          herData.name = shipStatus.api_name;
+
+          var maxFuel = shipStatus.api_fuel_max;
+          var maxAmmo = shipStatus.api_bull_max;
+          herData.needFuelSupply = her.api_fuel < maxFuel;
+          herData.needAmmoSupply = her.api_bull < maxAmmo;
+
+          herData.isOnFix = ShipMap.isOnFix(her.api_id);
+          if (herData.isOnFix) {
+              herData.fixTime = herData.isOnFix.api_complete_time_str;
+          }
+
+          return herData;
       }
   });
