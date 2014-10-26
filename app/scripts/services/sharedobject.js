@@ -8,14 +8,14 @@
  * Service in the kanColleViewerMomiApp.
  */
 angular.module('kanColleViewerMomiApp')
-  .service('SharedObject', function SharedObject(WS) {
+  .service('SharedObject', function SharedObject(WebSocket) {
       console.log("SharedObject created");
       var Service = {
           portJson: null,
           api_start2: null
       };
 
-      WS.subscribe(function(message){
+      WebSocket.subscribe(function(message){
           var json = JSON.parse(message);
           switch (json.api) {
           case "port":

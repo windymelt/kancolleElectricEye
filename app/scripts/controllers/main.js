@@ -17,7 +17,7 @@ angular.module('kanColleViewerMomiApp')
   });
 
 angular.module('kanColleViewerMomiApp')
-    .controller('PortCtrl', function ($route, $scope, WS, ShipMap, SharedObject) {
+    .controller('PortCtrl', function ($route, $scope, WebSocket, ShipMap, SharedObject) {
         if (SharedObject.api_start2Json == null) {$scope.needReload = true;}
         $scope.teitokuName = "Momiji";
             $scope.logs = [];
@@ -29,12 +29,12 @@ angular.module('kanColleViewerMomiApp')
             $scope.$apply();
         });
 
-        WS.registerOpening(function(){
+        WebSocket.registerOpening(function(){
             $scope.proxyProblem = false;
             $scope.$apply();
         });
 
-        WS.registerClosing(function(){
+        WebSocket.registerClosing(function(){
             $scope.proxyProblem = true;
             $scope.$apply();
         });
@@ -96,67 +96,3 @@ angular.module('kanColleViewerMomiApp')
         }
     }
                );
-
-angular.module('kanColleViewerMomiApp').factory('WS', function() {
-    var Service = {
-        openCallback: null,
-        closeCallback: null
-    };
-    var ws = new WebSocket("ws://localhost:8081/");
-
-    ws.onopen = function() {
-        console.log("Socket has been opened!");
-        if (Service.openCallback != null) { Service.openCallback(); }
-    };
-
-    ws.onmessage = function(message) {
-        console.log("Data Incoming");
-        Service.callback(message.data);
-    };
-
-    ws.onclose = function() {
-        if (Service.closeCallback != null) { Service.closeCallback(); }
-        Service.reconnect();
-        console.log("WS reconnected");
-    };
-
-    ws.onerror = function() {
-        console.log("WS error");
-        if (Service.closeCallback != null) { Service.closeCallback(); }
-    };
-
-    Service.reconnect = function () {
-        Service.ws.close();
-        Service.ws = new WebSocket("ws://localhost:8081/");
-
-        const CLOSED = 3;
-        const CLOSING = 2;
-
-        if (Service.ws.readyState == CLOSED || Service.ws.readyState == CLOSING) {
-            return false;
-        } else {
-            if (Service.openCallback != null) { Service.openCallback(); }
-            return true;
-        }
-    };
-
-    Service.ws = ws;
-
-    Service.send = function(message) {
-        Service.ws.send(message);
-    };
-
-    Service.subscribe = function(callback) {
-        Service.callback = callback;
-    };
-
-    Service.registerOpening = function (callback) {
-        Service.openCallback = callback;
-    };
-
-    Service.registerClosing = function (callback) {
-        Service.closeCallback = callback;
-    };
-
-    return Service;
-});
