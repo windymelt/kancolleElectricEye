@@ -43,11 +43,11 @@ angular.module('kanColleViewerMomiApp')
         renderPort();
         function renderPort() {
             if (SharedObject.portJson == null) { return; }
-            var jsonData = SharedObject.portJson;
-            $scope.teitokuName = jsonData.api_data.api_basic.api_nickname;
+
+            $scope.teitokuName = SharedObject.portJson.api_data.api_basic.api_nickname;
 
             $scope.logs = [];
-            jsonData.api_data.api_log.forEach(function(log){
+            SharedObject.portJson.api_data.api_log.forEach(function(log){
                 console.log("log: " + log.api_message);
                 var logObj = new Object();
                 logObj.id = log.api_no;
@@ -56,13 +56,13 @@ angular.module('kanColleViewerMomiApp')
             });
 
             var docks = [];
-            jsonData.api_data.api_deck_port.forEach(
+            SharedObject.portJson.api_data.api_deck_port.forEach(
                 function(dock){
                     var ships = [];
                     var dockObj = new Object();
                     dock.api_ship.forEach(
                         function(shipNo) {
-                            var ship = ShipMap.getFleetFromPort(jsonData, shipNo);
+                            var ship = ShipMap.getFleetFromPort(shipNo);
                             var shipData = new Object();
                             if (ship === undefined) {return;}
                             var shipStatus = ShipMap.fetchShipStatus(ship.api_ship_id);
@@ -72,7 +72,7 @@ angular.module('kanColleViewerMomiApp')
                             shipData.shipId = ship.api_ship_id;
                             shipData.name = shipStatus.api_name;
                             shipData.lv = ship.api_lv;
-                            shipData.isOnFix = ShipMap.isOnFix(jsonData, ship.api_id);
+                            shipData.isOnFix = ShipMap.isOnFix(ship.api_id);
                             if(shipData.isOnFix) {shipData.fixTime = shipData.isOnFix.api_complete_time_str;}
 
                             var maxFuel = shipStatus.api_fuel_max;
@@ -156,36 +156,6 @@ angular.module('kanColleViewerMomiApp').factory('WS', function() {
 
     Service.registerClosing = function (callback) {
         Service.closeCallback = callback;
-    };
-
-    return Service;
-});
-
-angular.module('kanColleViewerMomiApp').factory('ShipMap', function(SharedObject) {
-    var Service = {};
-
-    Service.getFleetFromPort = function(port, id) {
-        return port.api_data.api_ship.find(function(element, index, array){
-            return element.api_id == id;
-        });
-    };
-
-    Service.isOnFix = function(port, id) {
-        return port.api_data.api_ndock.find(function(element, index, array){
-            return element.api_ship_id == id;
-        });
-    };
-
-    Service.countFleetsOnFix = function () {
-        return SharedObject.portJson.api_data.api_ndock.filter(function (ndock) {
-            return ndock.api_state == 1;
-        }).length;
-    };
-
-    Service.fetchShipStatus = function (id) {
-        return SharedObject.api_start2Json.api_data.api_mst_ship.find(function (element, index, array) {
-            return element.api_id == id;
-        });
     };
 
     return Service;
