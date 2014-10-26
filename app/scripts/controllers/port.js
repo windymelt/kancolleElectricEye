@@ -38,14 +38,7 @@ angular.module('kanColleViewerMomiApp')
 
           $scope.teitokuName = SharedObject.portJson.api_data.api_basic.api_nickname;
 
-          $scope.logs = [];
-          SharedObject.portJson.api_data.api_log.forEach(function (log) {
-              console.log("log: " + log.api_message);
-              var logObj = new Object();
-              logObj.id = log.api_no;
-              logObj.message = log.api_message;
-              $scope.logs.push(logObj);
-          });
+          $scope.logs = generateLogArray(SharedObject.portJson);
 
           var docks = [];
           SharedObject.portJson.api_data.api_deck_port.forEach(
@@ -83,5 +76,17 @@ angular.module('kanColleViewerMomiApp')
           console.log($scope.fleetsFixDockCount + " ships are on fix.");
 
           $scope.$apply();
+      }
+
+      function generateLogArray (portJson) {
+          var logArray = [];
+          portJson.api_data.api_log.forEach(function (log) {
+              console.log("log: " + log.api_message);
+              var logObj = new Object();
+              logObj.id = log.api_no;
+              logObj.message = log.api_message;
+              logArray.push(logObj);
+          });
+          return logArray;
       }
   });
