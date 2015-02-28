@@ -103,6 +103,8 @@ angular.module('kanColleViewerMomiApp')
               herData.fixTime = herData.isOnFix.api_complete_time_str;
           }
 
+          herData.cond = her.api_cond;
+
           return herData;
       }
   });

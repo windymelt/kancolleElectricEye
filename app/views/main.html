@@ -45,17 +45,20 @@
           <div class="panel-body">
             <div ng-repeat="fleet in dock.ships">
               {{fleet.name}} (lv. {{fleet.lv}})
-              <span ng-if="fleet.needFuelSupply" class="label label-warning">Fuel</span>
-              <span ng-if="fleet.needAmmoSupply" class="label label-warning">Ammo</span>
+              <div>
+                <span ng-if="fleet.needFuelSupply" class="label label-warning">Fuel</span>
+                <span ng-if="fleet.needAmmoSupply" class="label label-warning">Ammo</span>
+                <span class="label" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49, 'label-default': fleet.cond == 49 }">Cond: {{fleet.cond}}</span>
+              </div>
               <div class="progress">
                 <div ng-if="fleet.isOnFix" class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
                      aria-valuemin="0" aria-valuemax="100" style="width: {{fleet.hpPercent}}%;">
                   {{fleet.hpPercent}}% - {{fleet.fixTime}}
                 </div>
                 <div
-                   ng-class="{'progress-bar-danger': fleet.hpPercent < 33, 'progress-bar-warning': fleet.hpPercent >= 33 && fleet.hpPercent < 75}"
-                   ng-if="!fleet.isOnFix" class="progress-bar" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
-                   aria-valuemin="0" aria-valuemax="100" style="width: {{fleet.hpPercent}}%;">
+                  ng-class="{'progress-bar-danger': fleet.hpPercent < 33, 'progress-bar-warning': fleet.hpPercent >= 33 && fleet.hpPercent < 75}"
+                  ng-if="!fleet.isOnFix" class="progress-bar" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
+                  aria-valuemin="0" aria-valuemax="100" style="width: {{fleet.hpPercent}}%;">
                   {{fleet.hpPercent}}%
                 </div>
               </div>
