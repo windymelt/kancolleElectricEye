@@ -40,7 +40,7 @@
       <div class="row">
         <div class="col-md-3 panel panel-success" ng-repeat="dock in docks">
           <div class="panel-heading">
-            <h4 class="panel-title">{{dock.name}} <span class="label label-danger" ng-show="dock.isOnFix">Fix</span></h4>
+            <h4 class="panel-title">{{dock.name}} <span class="label label-danger" ng-show="dock.isOnFix">Fix</span> <span class="label label-info" ng-show="dock.isOnMission">Mission</span></h4>
           </div>
           <div class="panel-body">
             <div ng-repeat="fleet in dock.ships">
@@ -64,7 +64,7 @@
                 </div>
               </div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>

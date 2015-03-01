@@ -63,6 +63,7 @@ angular.module('kanColleViewerMomiApp')
 
       function generateDockArray (portJson) {
           var docks = [];
+          var dockCount = 0;
           portJson.api_data.api_deck_port.forEach(function (dock) {
               var dockObj = new Object();
               dockObj.name = dock.api_name;
@@ -77,7 +78,10 @@ angular.module('kanColleViewerMomiApp')
 
               dockObj.isOnFix = false;
               dockObj.ships.forEach(function (her) {if (her.isOnFix) dockObj.isOnFix = true;});
+
+              dockObj.isOnMission = SharedObject.portJson.api_data.api_deck_port[dockCount].api_mission[0] == 1;
               docks.push(dockObj);
+              dockCount++;
           });
 
           return docks;
