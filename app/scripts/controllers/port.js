@@ -74,6 +74,9 @@ angular.module('kanColleViewerMomiApp')
                   if (herData !== undefined) {girls.push(herData);}
               });
               dockObj.ships = girls;
+
+              dockObj.isOnFix = false;
+              dockObj.ships.forEach(function (her) {if (her.isOnFix) dockObj.isOnFix = true;});
               docks.push(dockObj);
           });
 
