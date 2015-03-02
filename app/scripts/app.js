@@ -28,6 +28,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/dock/:dockId', {
+        templateUrl: 'views/dock.html',
+        controller: 'DockCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

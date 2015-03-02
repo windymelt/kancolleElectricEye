@@ -68,6 +68,7 @@ angular.module('kanColleViewerMomiApp')
           var dockCount = 0;
           portJson.api_data.api_deck_port.forEach(function (dock) {
               var dockObj = new Object();
+              dockObj.id = dockCount;
               dockObj.name = dock.api_name;
 
               var girls = [];
