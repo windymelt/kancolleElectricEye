@@ -96,7 +96,7 @@ angular.module('kanColleViewerMomiApp')
           var herData = new Object();
 
           herData.hp = her.api_nowhp;
-          herData.maxHp = her.api_maxhp
+          herData.maxHp = her.api_maxhp;
           herData.hpPercent = Math.round(her.api_nowhp / her.api_maxhp * 100);
           herData.id = her.api_id;
           herData.shipId = her.api_ship_id;
