@@ -10,6 +10,7 @@
 angular.module('kanColleViewerMomiApp')
   .controller('DockCtrl', function ($sce, $scope, $routeParams, WebSocket, ShipMap, SharedObject) {
       $scope.hpUnit = 1; // 1: abstruct, -1: percent
+      $scope.chartMode = 1; // 1: each, -1: sum
 
       SharedObject.hook("api_start2", function () {
           $scope.needReload = false;
@@ -74,6 +75,7 @@ angular.module('kanColleViewerMomiApp')
               "rgba(222,207,63,1)",
               "rgba(241,88,84,1)"
           ];
+          var sumRadarColor = "rgba(241,124,176,1)";
 
           var dataSets = [];
           girls.forEach(function (her) {
@@ -91,7 +93,37 @@ angular.module('kanColleViewerMomiApp')
               });
               i_fleet++;
           });
-          var data = {labels: ["耐久", "火力", "装甲", "雷装", "回避", "対空", "対潜", "索敵"], datasets: dataSets};
+
+          var data;
+          var labels = ["耐久", "火力", "装甲", "雷装", "回避", "対空", "対潜", "索敵"];
+          if ($scope.chartMode == 1) { // 各艦娘のグラフを重ねて描写するとき
+              data = {labels: labels, datasets: dataSets};
+          } else if ($scope.chartMode == -1) { // 合計グラフを描写するとき
+              var sumData = [0, 0, 0, 0, 0, 0, 0, 0];
+              // 全ての当該艦隊に所属する艦娘に対して
+              dataSets.forEach(function (girl) {
+                  var i_label = 0;
+                  // 能力ごとの合計値を求める
+                  labels.forEach(function (label) {
+                      console.log(label + " of " + girl.label + " is " + girl.data[i_label]);
+                      sumData[i_label] += girl.data[i_label];
+                      i_label++;
+                  });
+              });
+              // 合計データセットを作成する
+              var sumDataSet = [{
+                  label: "合計",
+                  fillColor: sumRadarColor,
+                  strokeColor: fleetRadarColorOpaque[i_fleet],
+                  pointColor: fleetRadarColorOpaque[i_fleet],
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(220,220,220,1)",
+                  data: sumData
+              }];
+              data = {labels: labels, datasets: sumDataSet};
+          }
+
           var statusChartCtx = $("#status-chart").get(0).getContext("2d");
           var statusChart = new Chart(statusChartCtx).Radar(data, {
               scaleShowLabels: true,
@@ -100,6 +132,12 @@ angular.module('kanColleViewerMomiApp')
           });
           $scope.statusChartLegend = $sce.trustAsHtml(statusChart.generateLegend());
       }
+
+      $scope.invertChartMode = function () {
+          $scope.chartMode = -$scope.chartMode;
+          console.log("Now, chartMode:" + $scope.chartMode);
+          drawStatusRadar($scope.girls);
+      };
 
       function generateFleetObjectFromAPIFleet (her) {
           if (her === undefined) { return undefined; }
