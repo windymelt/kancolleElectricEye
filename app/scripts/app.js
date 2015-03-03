@@ -32,6 +32,10 @@ angular
         templateUrl: 'views/dock.html',
         controller: 'DockCtrl'
       })
+      .when('/girl/:girlId', {
+        templateUrl: 'views/girl.html',
+        controller: 'GirlCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
