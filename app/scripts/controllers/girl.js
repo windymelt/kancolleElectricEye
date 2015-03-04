@@ -73,8 +73,6 @@ angular.module('kanColleViewerMomiApp')
               statusActual = [];
 
           status.forEach(function (pair) { statusActual.push(pair[0]); statusIdeal.push(pair[1]); });
-          console.log("ideal: " + statusIdeal);
-          console.log("actual: " + statusActual);
 
           var radarColorActualOpaque = "rgba(96,189,104,1)";
           var radarColorActual = "rgba(96,189,104,0.05)";
@@ -103,7 +101,6 @@ angular.module('kanColleViewerMomiApp')
           };
           var dataSet = [dataSetActual, dataSetIdeal];
           var data = {labels: labels, datasets: dataSet};
-          console.log(data);
 
           var statusChartCtx = $("#status-chart").get(0).getContext("2d");
           var statusChart = new Chart(statusChartCtx).Radar(data, {
