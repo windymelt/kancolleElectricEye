@@ -26,10 +26,11 @@ angular.module('kanColleViewerMomiApp')
       });
 
       SharedObject.hook("port", function () { renderGirl(); });
+      SharedObject.hook("slot_item", function () { renderGirl(); });
       renderGirl();
 
       function renderGirl () {
-          if (SharedObject.portJson == null) { return; }
+          if (SharedObject.portJson == null || SharedObject.slot_itemJson == null) { return; }
           $scope.girlId = $routeParams.girlId;
           $scope.hpUnit = 1; // 1: abstruct, -1: percent
           var her = ShipMap.getFleetFromPort($scope.girlId);
@@ -49,10 +50,20 @@ angular.module('kanColleViewerMomiApp')
           // 最大能力はapi_start2から取得するっぽい
           var status = [herFleet.karyoku, herFleet.soukou, herFleet.raisou, herFleet.kaihi, herFleet.taiku, herFleet.taisen, herFleet.sakuteki];
           var zippedStatus = labels.map(function (elem, i) { return [labels[i], status[i]]; });
-          console.log(zippedStatus);
           $scope.zippedStatus = zippedStatus;
 
           drawStatusRadar(labels, status);
+
+          var items = [];
+          herFleet.items.forEach(function (id) {
+              var item = ShipMap.getItem(id);
+              if (item !== undefined) {
+                  items.push({item:item, status:ShipMap.getItemStatus(item.api_slotitem_id)});
+              } else {
+                  items.push(undefined);
+              }
+          });
+          $scope.items = items;
 
           $scope.$apply();
       }

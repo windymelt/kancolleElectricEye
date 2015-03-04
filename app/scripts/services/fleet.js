@@ -22,6 +22,8 @@ angular.module('kanColleViewerMomiApp')
             herData.shipId = her.api_ship_id;
             herData.lv = her.api_lv;
 
+            herData.items = her.api_slot.slice(0, her.api_slotnum);
+
             herData.karyoku = her.api_karyoku;
             herData.soukou = her.api_soukou;
             herData.raisou = her.api_raisou;
