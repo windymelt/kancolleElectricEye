@@ -30,6 +30,24 @@ angular.module('kanColleViewerMomiApp')
                 return SharedObject.api_start2Json.api_data.api_mst_ship.find(function (element) {
                     return element.api_id == id;
                 });
+            },
+            getDockIdSheBelongsTo: function (id) {
+                console.log("Searching fleet id: " + id);
+                var result = SharedObject.portJson.api_data.api_deck_port.find(function (dock) {
+                    console.log("Now searching in dock #" + dock.api_id);
+                    var index = dock.api_ship.indexOf(parseInt(id));
+                    console.log("Searched index is: " + index);
+                    return index >= 0; // 存在しないときは-1を返す; 存在していれば0以上の値を返す
+                });
+                if (result !== undefined) {
+                    return SharedObject.portJson.api_data.api_deck_port.indexOf(result);
+                } else {
+                    console.log("Fleet not found in deck");
+                    return undefined;
+                }
+            },
+            getDockName: function (id) {
+                return SharedObject.portJson.api_data.api_deck_port[id].api_name;
             }
         };
     });
