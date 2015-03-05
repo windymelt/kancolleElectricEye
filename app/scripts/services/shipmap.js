@@ -16,6 +16,13 @@ angular.module('kanColleViewerMomiApp')
                     return element.api_id == id;
                 });
             },
+            getShipTypeNameFromId: function (id) {
+                var shipType = SharedObject.api_start2Json.api_data.api_mst_stype.find(function (stype) {
+                    return stype.api_id == id;
+                });
+                if (shipType === undefined) { return undefined; }
+                return shipType.api_name;
+            },
             isOnFix: function (id) {
                 return SharedObject.portJson.api_data.api_ndock.find(function(element){
                     return element.api_ship_id == id;

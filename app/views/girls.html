@@ -1,0 +1,32 @@
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li class="active">艦娘一覧</li>
+</ol>
+
+<div class="panel panel-default">
+  <div class="panel-heading">艦娘一覧</div>
+  <div class="panel-body">
+    <p>...</p>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th ng-repeat="(i,th) in head" ng-click="changeSorting(i)" ng-class="selectedCls(i)">{{th}} <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" ng-show="sort.column == i && !sort.descending"></span><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="sort.column == i && sort.descending"></span></th>
+    </tr>
+    <tr ng-repeat="row in body | orderBy:sort.column:sort.descending">
+      <td ng-class="selectedCls('a')">{{row.a}}</td>
+      <td ng-class="selectedCls('b')">{{row.b}}</td>
+      <td ng-class="selectedCls('c')"><a href="#/girl/{{row.a}}">{{row.c}}</a></td>
+      <td ng-class="selectedCls('d')">{{row.d}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'e',success: row.e > 49 }">{{row.e}}</td>
+      <td ng-class="selectedCls('f')">{{row.f}}</td>
+      <td ng-class="selectedCls('g')">{{row.g}}</td>
+      <td ng-class="selectedCls('h')">{{row.h}}</td>
+      <td ng-class="selectedCls('i')">{{row.i}}</td>
+      <td ng-class="selectedCls('j')">{{row.j}}</td>
+      <td ng-class="selectedCls('k')">{{row.k}}</td>
+      <td ng-class="selectedCls('l')">{{row.l}}</td>
+      <td ng-class="selectedCls('m')">{{row.m}}</td>
+    </tr>
+  </table>
+</div>
