@@ -50,11 +50,14 @@ angular.module('kanColleViewerMomiApp')
                 return SharedObject.portJson.api_data.api_deck_port[id].api_name;
             },
             getItem: function (id) {
+                if (SharedObject.slot_itemJson == null) { return undefined; }
+                if (id == -1) { return undefined; }
                 return SharedObject.slot_itemJson.api_data.find(function (item) {
                     return item.api_id == id;
                 });
             },
             getItemStatus: function (id) {
+                if (id === undefined) { return undefined; }
                 return SharedObject.api_start2Json.api_data.api_mst_slotitem.find(function (item) {
                     return item.api_id == id;
                 });

@@ -37,10 +37,12 @@ angular.module('kanColleViewerMomiApp')
       });
 
       SharedObject.hook("port", function () { renderPort(); });
+      SharedObject.hook("slot_item", function () { renderPort(); });
       renderPort();
 
       function renderPort () {
           if (SharedObject.portJson == null) { return; }
+          if (SharedObject.slot_itemJson == null) { return; }
 
           $scope.teitokuName = getTeitokuName(SharedObject.portJson);
           $scope.logs = generateLogArray(SharedObject.portJson);
@@ -87,6 +89,9 @@ angular.module('kanColleViewerMomiApp')
               dockObj.ships.forEach(function (her) {if (her.isOnFix) dockObj.isOnFix = true;});
 
               dockObj.isOnMission = SharedObject.portJson.api_data.api_deck_port[dockCount].api_mission[0] == 1;
+
+              dockObj.airSperiorityIndex = Fleet.calculateAirSperiorityIndexFromGirls(dock.api_ship);
+
               docks.push(dockObj);
               dockCount++;
           });

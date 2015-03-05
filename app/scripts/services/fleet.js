@@ -8,7 +8,7 @@
  * Factory in the kanColleViewerMomiApp.
  */
 angular.module('kanColleViewerMomiApp')
-    .factory('Fleet', function (ShipMap) {
+    .factory('Fleet', function (ShipMap, SharedObject) {
 
         function generateFleetObjectFromAPIFleet (her) {
             if (her === undefined) { return undefined; }
@@ -48,10 +48,56 @@ angular.module('kanColleViewerMomiApp')
 
             herData.cond = her.api_cond;
 
+            herData.airSperiorityIndex = calculateAirSperiorityIndex(her.api_id);
+
             return herData;
         }
 
+        function calculateAirSperiorityIndex(girlId) {
+            if (girlId == -1) { return 0; }
+            if (SharedObject.slot_itemJson == null) { return undefined; }
+            var girl = ShipMap.getFleetFromPort(girlId);
+            if (girl === undefined) { return undefined; }
+            var slotItemIds = girl.api_slot.slice(0, girl.api_slotnum),
+                slotAmounts = girl.api_onslot.slice(0,girl.api_slotnum);
+
+            var slotItemTaiku = slotItemIds.
+                    map(ShipMap.getItem)
+                    .map(function (item) {
+                        if (item == undefined) { return undefined; }
+                        return item.api_slotitem_id;
+                    })
+                    .map(ShipMap.getItemStatus)
+                    .map(function (status) {
+                        // [3, 5, 6, 6]は戦闘機、[5, 7, 11, 10]は水上戦闘機
+                        if (status === undefined) { return 0; }
+                        if (JSON.stringify(status.api_type) == "[3,5,6,6]" || JSON.stringify(status.api_type) == "[5,7,11,10]") {
+                            return status.api_tyku;
+                        } else {
+                            return 0;
+                        }
+                    });
+            var index = slotItemTaiku
+                .map(function (_, i) {
+                    return Math.floor(slotItemTaiku[i] * Math.sqrt(slotAmounts[i]));
+                })
+                .reduce(function (x, y) {
+                    return x + y;
+                });
+            return index;
+        }
+
+        function calculateAirSperiorityIndexFromGirls (girls) {
+            var indexSum = 0;
+            girls.forEach(function (girl) {
+                indexSum += calculateAirSperiorityIndex(girl);
+            });
+            return indexSum;
+        }
+
         return {
-            generateFleetObjectFromAPIFleet: generateFleetObjectFromAPIFleet
+            generateFleetObjectFromAPIFleet: generateFleetObjectFromAPIFleet,
+            calculateAirSperiorityIndex: calculateAirSperiorityIndex,
+            calculateAirSperiorityIndexFromGirls: calculateAirSperiorityIndexFromGirls
         };
     });
