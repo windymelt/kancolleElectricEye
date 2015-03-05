@@ -54,16 +54,7 @@ angular.module('kanColleViewerMomiApp')
 
           drawStatusRadar(labels, status);
 
-          var items = [];
-          herFleet.items.forEach(function (id) {
-              var item = ShipMap.getItem(id);
-              if (item !== undefined) {
-                  items.push({item:item, status:ShipMap.getItemStatus(item.api_slotitem_id)});
-              } else {
-                  items.push(undefined);
-              }
-          });
-          $scope.items = items;
+          $scope.items = Fleet.generateSlotItemsDescription(herFleet.items);
 
           $scope.$apply();
       }

@@ -95,9 +95,23 @@ angular.module('kanColleViewerMomiApp')
             return indexSum;
         }
 
+        function generateSlotItemsDescription (itemIds) {
+            var items = [];
+            itemIds.forEach(function (id) {
+                var item = ShipMap.getItem(id);
+                if (item !== undefined) {
+                    items.push({item:item, status:ShipMap.getItemStatus(item.api_slotitem_id)});
+                } else {
+                    items.push(undefined);
+                }
+            });
+            return items;
+        }
+
         return {
             generateFleetObjectFromAPIFleet: generateFleetObjectFromAPIFleet,
             calculateAirSperiorityIndex: calculateAirSperiorityIndex,
-            calculateAirSperiorityIndexFromGirls: calculateAirSperiorityIndexFromGirls
+            calculateAirSperiorityIndexFromGirls: calculateAirSperiorityIndexFromGirls,
+            generateSlotItemsDescription: generateSlotItemsDescription
         };
     });

@@ -48,6 +48,14 @@
               <span ng-if="hpUnit == -1">{{fleet.hpPercent}}%</span>
             </div>
           </div>
+          <div>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in fleet.itemDescriptions">
+                <span ng-hide="item === undefined"><a href="#/item/{{item.item.api_id}}">{{item.status.api_name}}</a></span>
+                <span ng-show="item === undefined">Empty</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div !-- .panel.panel-default -->

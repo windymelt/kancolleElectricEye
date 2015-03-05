@@ -56,6 +56,10 @@ angular.module('kanColleViewerMomiApp')
 
           $scope.airSperiorityIndex = Fleet.calculateAirSperiorityIndexFromGirls(girls.map(function (girl) { return girl.id; }));
 
+          girls.forEach(function (girl, i_girl) {
+              girls[i_girl].itemDescriptions = Fleet.generateSlotItemsDescription(girl.items);
+          });
+
           drawStatusRadar(girls, 0);
 
           $scope.$apply();
