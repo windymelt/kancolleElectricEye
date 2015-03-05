@@ -16,6 +16,10 @@ angular.module('kanColleViewerMomiApp')
 
       $scope.hpUnit = 1; // 1: abstruct, -1: percent
 
+      $scope.inc = {};
+      $scope.inc.searchString = "";
+      $scope.inc.searchKeyUp = incSearchKeyUp;
+
       SharedObject.hook("api_start2", function () {
           $scope.needReload = false;
           console.log("Received api_start2!");
@@ -88,5 +92,33 @@ angular.module('kanColleViewerMomiApp')
           });
 
           return docks;
+      }
+
+      function incSearchKeyUp () {
+          if ($scope.inc.searchString.length > 0) {
+              $scope.inc.searching = true;
+              // 文字列に合致する艦娘・装備を検索する
+              // 番号でも検索する
+              var matchedGirls = ShipMap.findGirlsWithName($scope.inc.searchString);
+              var matchedSlotItemTypes = ShipMap.findSlotItemTypesWithName($scope.inc.searchString);
+
+              var matchedSlotItemTypesId = [];
+              matchedSlotItemTypes.forEach(function (type) { matchedSlotItemTypesId.push(type.api_id); });
+
+              var matchedSlotItems = ShipMap.findSlotItemsWithType(matchedSlotItemTypesId);
+
+              var slotItemsNameIdGirl = [];
+              for (var typeId in matchedSlotItems){
+                  matchedSlotItems[typeId].forEach(function (item) {
+                      var owner = ShipMap.findSlotItemOwnerByItemId(item);
+                      slotItemsNameIdGirl.push({name: ShipMap.getItemStatus(typeId).api_name, owner: Fleet.generateFleetObjectFromAPIFleet(owner), typeId: typeId, itemId: item});
+                  });
+              }
+
+              $scope.inc.girls = matchedGirls.map(Fleet.generateFleetObjectFromAPIFleet);
+              $scope.inc.slotItems = slotItemsNameIdGirl;
+          } else {
+              $scope.inc.searching = false;
+          }
       }
   });

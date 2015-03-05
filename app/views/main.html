@@ -33,6 +33,23 @@
     </button>
   </div>
 
+  <div>
+    <div class="panel">
+      <div class="dropdown">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+          <input type="text" class="form-control" data-toggle="dropdown" aria-expanded="true" placeholder="32号対水上電探, 最上, etc." aria-describedby="basic-addon1" ng-keyup="inc.searchKeyUp()" ng-model="inc.searchString" id="incremental-search-box" >
+          <ul class="dropdown-menu" role="menu" ng-show="inc.searching" aria-labelledby="incremental-search-box">
+            <li role="presentation" class="dropdown-header">艦娘</li>
+            <li role="presentation" ng-repeat="girl in inc.girls"><a role="menuitem" tabindex="-1" href="#/girl/{{girl.id}}">#{{girl.id}}: {{girl.name}}</a></li>
+            <li role="presentation" class="dropdown-header">装備</li>
+            <li role="presentation" ng-repeat="item in inc.slotItems"><a role="menuitem" tabindex="-1" href="#/girl/{{item.owner.id}}">#{{item.itemId}}: {{item.name}} （{{item.owner.name}}）</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h4>Kanmusu</h4>
   <p>
     <div class="container-fluid">
