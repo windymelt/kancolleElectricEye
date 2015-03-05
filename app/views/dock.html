@@ -3,7 +3,7 @@
   <li>ドック</li>
   <li class="active">{{dockName}}</li>
 </ol>
-<h1>Dock #{{dockId}}: {{dockName}}</h1>
+<h1>Dock #{{dockId}}: {{dockName}} <span class="label label-danger" ng-show="isOnFix">Fix</span> <span class="label label-info" ng-show="isOnMission">Mission</span></h1>
 <button type="button" class="btn btn-default" ng-click="hpUnit = -hpUnit">HP unit</button>
 <button type="button" class="btn btn-default" ng-click="invertChartMode();">Each/Sum</button>
 <div class="row">
@@ -21,20 +21,15 @@
     </div>
   </div !-- .col-md-3 -->
 
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">所属艦娘 <span class="label label-danger" ng-show="dock.isOnFix">Fix</span> <span class="label label-info" ng-show="dock.isOnMission">Mission</span></h4>
-      </div>
-      <div class="panel-body">
-        <div ng-repeat="fleet in girls">
-          <div>
-            <a href="#/girl/{{fleet.id}}">{{fleet.name}} (lv. {{fleet.lv}})</a>
-            <span class="label" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49, 'label-default': fleet.cond == 49 }">Cond: {{fleet.cond}}</span>
+  <div class="row">
+    <div class="col-md-4" ng-repeat="fleet in girls">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a href="#/girl/{{fleet.id}}">#{{$index + 1}}: {{fleet.name}} (lv. {{fleet.lv}})</a> <span class="label" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49, 'label-default': fleet.cond == 49 }">Cond: {{fleet.cond}}</span>
             <span ng-if="fleet.needFuelSupply" class="label label-warning">Fuel</span>
-            <span ng-if="fleet.needAmmoSupply" class="label label-warning">Ammo</span>
-          </div>
-          <br />
+            <span ng-if="fleet.needAmmoSupply" class="label label-warning">Ammo</span></h4>
+        </div>
+        <div class="panel-body">
           <div class="progress">
             <div ng-if="fleet.isOnFix" class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="100"
                  aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
@@ -48,16 +43,14 @@
               <span ng-if="hpUnit == -1">{{fleet.hpPercent}}%</span>
             </div>
           </div>
-          <div>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="item in fleet.itemDescriptions">
-                <span ng-hide="item === undefined"><a href="#/item/{{item.item.api_id}}">{{item.status.api_name}}</a></span>
-                <span ng-show="item === undefined">Empty</span>
-              </li>
-            </ul>
-          </div>
         </div>
-      </div>
-    </div !-- .panel.panel-default -->
-  </div !-- .col-md-3 -->
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="item in fleet.itemDescriptions">
+            <span ng-hide="item === undefined"><a href="#/item/{{item.item.api_id}}">{{item.status.api_name}}</a></span>
+            <span ng-show="item === undefined">Empty</span>
+          </li>
+        </ul>
+      </div !-- .panel.panel-default -->
+    </div !-- .col-md-3 -->
+  </div>
 </div>
