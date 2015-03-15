@@ -86,9 +86,10 @@ angular.module('kanColleViewerMomiApp')
                     return foundFlag;
                 });
             },
-            findSlotItemTypesWithName: function (q, havingOnly = true) {
+            findSlotItemTypesWithName: function (q, havingOnly) {
                 // 名前から装備を探す関数
                 // havingOnly == trueのときは艦隊にある装備のみ返す
+                if (havingOnly === undefined) { havingOnly = true; }
 
                 // 所与の装備種別IDに該当する装備を艦隊が有しているかを返すヘルパー関数
                 function itemExists(typeId) {
