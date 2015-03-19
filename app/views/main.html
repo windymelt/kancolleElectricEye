@@ -52,7 +52,7 @@
         <div class="col-md-3" ng-repeat="dock in docks">
           <div class="panel panel-success">
             <div class="panel-heading">
-              <a href="/#/dock/{{dock.id}}"><h4 class="panel-title">{{dock.name}} <span class="label label-default">制空: {{dock.airSperiorityIndex}}</span><span class="label label-danger" ng-show="dock.isOnFix">Fix</span> <span class="label label-info" ng-show="dock.isOnMission">Mission</span></h4></a>
+              <a href="#/dock/{{dock.id}}"><h4 class="panel-title">{{dock.name}} <span class="label label-default">制空: {{dock.airSperiorityIndex}}</span><span class="label label-danger" ng-show="dock.isOnFix">Fix</span> <span class="label label-info" ng-show="dock.isOnMission">Mission</span></h4></a>
             </div>
             <div class="panel-body">
               <div ng-repeat="fleet in dock.ships">
