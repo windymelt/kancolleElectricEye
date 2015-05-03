@@ -14,19 +14,19 @@
       <th ng-repeat="(i,th) in head" ng-click="changeSorting(i)" ng-class="selectedCls(i)">{{th}} <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" ng-show="sort.column == i && !sort.descending"></span><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="sort.column == i && sort.descending"></span></th>
     </tr>
     <tr ng-repeat="row in body | orderBy:sort.column:sort.descending">
-      <td ng-class="selectedCls('a')">{{row.a}}</td>
-      <td ng-class="selectedCls('b')">{{row.b}}</td>
-      <td ng-class="selectedCls('c')"><a href="#/girl/{{row.a}}">{{row.c}}</a></td>
-      <td ng-class="selectedCls('d')">{{row.d}}</td>
-      <td ng-class="{ active: $scope.sort.column == 'e',success: row.e > 49 }">{{row.e}}</td>
-      <td ng-class="selectedCls('f')">{{row.f}}</td>
-      <td ng-class="selectedCls('g')">{{row.g}}</td>
-      <td ng-class="selectedCls('h')">{{row.h}}</td>
-      <td ng-class="selectedCls('i')">{{row.i}}</td>
-      <td ng-class="selectedCls('j')">{{row.j}}</td>
-      <td ng-class="selectedCls('k')">{{row.k}}</td>
-      <td ng-class="selectedCls('l')">{{row.l}}</td>
-      <td ng-class="selectedCls('m')">{{row.m}}</td>
+      <td ng-class="selectedCls('a')"><!-- ID -->{{row.a}}</td>
+      <td ng-class="selectedCls('b')"><!-- 艦種 -->{{row.b}}</td>
+      <td ng-class="selectedCls('c')"><!-- 艦名 --><a href="#/girl/{{row.a}}">{{row.c}}</a></td>
+      <td ng-class="selectedCls('d')"><!-- LV. -->{{row.d}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'e',success: row.e > 49 }"><!-- Cond. -->{{row.e}}</td>
+      <td ng-class="selectedCls('f')"><!-- HP -->{{row.f}}</td>
+      <td ng-class="selectedCls('g')"><!-- 火力 -->{{row.g}}</td>
+      <td ng-class="selectedCls('h')"><!-- 雷装 -->{{row.h}}</td>
+      <td ng-class="selectedCls('i')"><!-- 対空 -->{{row.i}}</td>
+      <td ng-class="selectedCls('j')"><!-- 装甲 -->{{row.j}}</td>
+      <td ng-class="selectedCls('k')"><!-- 運 -->{{row.k}}</td>
+      <td ng-class="selectedCls('l')"><!-- 索敵 -->{{row.l}}</td>
+      <td ng-class="selectedCls('m')"><!-- 制空 -->{{row.m}}</td>
     </tr>
   </table>
 </div>
