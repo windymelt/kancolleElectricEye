@@ -44,12 +44,21 @@ angular.module('kanColleViewerMomiApp')
               $scope.herDockName = ShipMap.getDockName($scope.herDockId);
           }
 
-          var labels = ["火力", "装甲", "雷装", "回避", "対空", "対潜", "索敵"];
+          var labels = ["火力", "装甲", "雷装", "対空", "回避", "対潜", "索敵"];
           // 各パラメタの0番は装備を加味した能力値(実効値)、1番は装備を除いた近代化改修を利用した場合に得られる最大能力値(理論最大値)？
           // ただし運は謎
           // 最大能力はapi_start2から取得するっぽい
-          var status = [herFleet.karyoku, herFleet.soukou, herFleet.raisou, herFleet.kaihi, herFleet.taiku, herFleet.taisen, herFleet.sakuteki];
-          var zippedStatus = labels.map(function (elem, i) { return [labels[i], status[i]]; });
+          var status = [herFleet.karyoku, herFleet.soukou, herFleet.raisou, herFleet.taiku, herFleet.kaihi, herFleet.taisen, herFleet.sakuteki];
+          var reinforcementMaxFlag = [
+              herFleet.kyoukaMaxFlag.hougeki,
+              herFleet.kyoukaMaxFlag.soukou,
+              herFleet.kyoukaMaxFlag.raigeki,
+              herFleet.kyoukaMaxFlag.taiku,
+              false,
+              false,
+              false
+          ];
+          var zippedStatus = labels.map(function (elem, i) { return [labels[i], status[i], reinforcementMaxFlag[i]]; });
           $scope.zippedStatus = zippedStatus;
 
           drawStatusRadar(labels, status);

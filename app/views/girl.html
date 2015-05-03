@@ -10,6 +10,7 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="col-md-6">
+        <span class="label label-success" ng-show="girl.kyoukaMaxFlag.all">Max reinforcement</span>
         <span class="label label-info" ng-hide="herDockId === undefined">Belongs to #{{herDockId + 1}}: {{herDockName}}</span>
         <span class="label label-success" ng-show="girl.hp == girl.maxHp">Full HP</span>
         <span class="label" ng-class="{ 'label-warning': girl.cond < 49 && girl.cond > 19, 'label-danger': girl.cond < 20, 'label-success': girl.cond > 49, 'label-default': girl.cond == 49 }">Cond: {{girl.cond}}</span>
@@ -46,7 +47,7 @@
         <canvas id="status-chart" width="300" height="300"></canvas>
         <div ng-bind-html="statusChartLegend"></div>
         <ul class="list-group">
-          <li class="list-group-item" ng-repeat="subj in zippedStatus">{{subj[0]}}: {{subj[1][0]}} ({{subj[1][1]}})</li>
+          <li class="list-group-item" ng-repeat="subj in zippedStatus">{{subj[0]}}: {{subj[1][0]}} ({{subj[1][1]}}) <span class="label label-success" ng-show="subj[2]">Max</span></li>
         </ul>
       </div !-- .panel-body -->
     </div !-- .panel.panel-default-->

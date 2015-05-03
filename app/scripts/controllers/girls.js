@@ -82,7 +82,8 @@ angular.module('kanColleViewerMomiApp')
                   j: girl.soukou[0],
                   k: girl.un[0],
                   l: girl.sakuteki[0],
-                  m: Fleet.calculateAirSperiorityIndex(girl.id)
+                  m: Fleet.calculateAirSperiorityIndex(girl.id),
+                  kyoukaMaxFlag: girl.kyoukaMaxFlag
               });
           });
           $scope.body = girls;

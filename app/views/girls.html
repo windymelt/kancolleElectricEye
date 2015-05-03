@@ -20,10 +20,10 @@
       <td ng-class="selectedCls('d')"><!-- LV. -->{{row.d}}</td>
       <td ng-class="{ active: $scope.sort.column == 'e',success: row.e > 49 }"><!-- Cond. -->{{row.e}}</td>
       <td ng-class="selectedCls('f')"><!-- HP -->{{row.f}}</td>
-      <td ng-class="selectedCls('g')"><!-- 火力 -->{{row.g}}</td>
-      <td ng-class="selectedCls('h')"><!-- 雷装 -->{{row.h}}</td>
-      <td ng-class="selectedCls('i')"><!-- 対空 -->{{row.i}}</td>
-      <td ng-class="selectedCls('j')"><!-- 装甲 -->{{row.j}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'g',success: row.kyoukaMaxFlag.hougeki }"><!-- 火力 -->{{row.g}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'h',success: row.kyoukaMaxFlag.raigeki }"><!-- 雷装 -->{{row.h}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'i',success: row.kyoukaMaxFlag.taiku }"><!-- 対空 -->{{row.i}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'j',success: row.kyoukaMaxFlag.soukou }"><!-- 装甲 -->{{row.j}}</td>
       <td ng-class="selectedCls('k')"><!-- 運 -->{{row.k}}</td>
       <td ng-class="selectedCls('l')"><!-- 索敵 -->{{row.l}}</td>
       <td ng-class="selectedCls('m')"><!-- 制空 -->{{row.m}}</td>

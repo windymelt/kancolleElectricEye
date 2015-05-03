@@ -59,6 +59,7 @@ angular.module('kanColleViewerMomiApp')
                 'taiku'  : shipStatus.api_tyku[1] == shipStatus.api_tyku[0] + herData.kyouka.taiku,
                 'soukou' : shipStatus.api_souk[1] == shipStatus.api_souk[0] + herData.kyouka.soukou
             };
+            herData.kyoukaMaxFlag.all = herData.kyoukaMaxFlag.hougeki && herData.kyoukaMaxFlag.raigeki && herData.kyoukaMaxFlag.taiku && herData.kyoukaMaxFlag.soukou;
 
             herData.cond = her.api_cond;
 
