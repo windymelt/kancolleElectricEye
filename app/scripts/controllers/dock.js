@@ -60,9 +60,29 @@ angular.module('kanColleViewerMomiApp')
               girls[i_girl].itemDescriptions = Fleet.generateSlotItemsDescription(girl.items);
           });
 
+          $scope.dockCSV = generateDockCSV(girls);
           drawStatusRadar(girls, 0);
 
           $scope.$apply();
+      }
+
+      function generateDockCSV(girls) {
+          var tempStr = [];
+          var header = ['序列', '艦名', 'LV.', '装備1', '装備2', '装備3', '装備4'];
+          tempStr.push(header.join());
+          girls.forEach(function (girl, i_girl) {
+              var record = [
+                  i_girl == 0 ? '旗艦' : (i_girl + 1) + '番艦',
+                  girl.name,
+                  girl.lv,
+                  (girl.itemDescriptions[0] || {'status': ''}).status.api_name,
+                  (girl.itemDescriptions[1] || {'status': ''}).status.api_name,
+                  (girl.itemDescriptions[2] || {'status': ''}).status.api_name,
+                  (girl.itemDescriptions[3] || {'status': ''}).status.api_name
+              ];
+              tempStr.push(record.join());
+          });
+          return tempStr.join("\n");
       }
 
       function drawStatusRadar(girls) {
