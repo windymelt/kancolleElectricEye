@@ -33,6 +33,13 @@ angular.module('kanColleViewerMomiApp')
             herData.sakuteki = her.api_sakuteki;
             herData.un = her.api_lucky;
 
+            herData.kyouka = {
+                'hougeki': her.api_kyouka[0],
+                'raigeki': her.api_kyouka[1],
+                'taiku'  : her.api_kyouka[2],
+                'soukou' : her.api_kyouka[3]
+            };
+
             var shipStatus = ShipMap.fetchShipStatus(her.api_ship_id);
             herData.name = shipStatus.api_name;
 
@@ -45,6 +52,13 @@ angular.module('kanColleViewerMomiApp')
             if (herData.isOnFix) {
                 herData.fixTime = herData.isOnFix.api_complete_time_str;
             }
+
+            herData.kyoukaMaxFlag = {
+                'hougeki': shipStatus.api_houg[1] == shipStatus.api_houg[0] + herData.kyouka.hougeki,
+                'raigeki': shipStatus.api_raig[1] == shipStatus.api_raig[0] + herData.kyouka.raigeki,
+                'taiku'  : shipStatus.api_tyku[1] == shipStatus.api_tyku[0] + herData.kyouka.taiku,
+                'soukou' : shipStatus.api_souk[1] == shipStatus.api_souk[0] + herData.kyouka.soukou
+            };
 
             herData.cond = her.api_cond;
 
