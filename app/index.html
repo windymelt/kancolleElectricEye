@@ -28,13 +28,13 @@
           <li class="active"><a ng-href="#">総合</a></li>
           <li><a ng-href="#/about">About</a></li>
         </ul>
-        <h3 class="text-muted">kanColleViewerMomi</h3>
+        <h3 class="text-muted">艦これのアレ</h3>
       </div>
 
       <div ng-view=""></div>
 
       <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p><span class="glyphicon glyphicon-heart"></span> Developed by <a target="_blank" href="https://twitter.com/windymelt">@windymelt</a></p>
       </div>
     </div>
 
@@ -69,6 +69,9 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-timer/dist/angular-timer.js"></script>
+    <script src="bower_components/reconnecting-websocket/reconnecting-websocket.js"></script>
+    <script src="bower_components/Chart.js/Chart.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -76,6 +79,15 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/services/sharedobject.js"></script>
+        <script src="scripts/services/shipmap.js"></script>
+        <script src="scripts/services/websocket.js"></script>
+        <script src="scripts/controllers/port.js"></script>
+        <script src="scripts/controllers/dock.js"></script>
+        <script src="scripts/controllers/girl.js"></script>
+        <script src="scripts/services/fleet.js"></script>
+        <script src="scripts/controllers/girls.js"></script>
+        <script src="scripts/controllers/girlsstat.js"></script>
         <!-- endbuild -->
 </body>
 </html>

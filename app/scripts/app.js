@@ -28,51 +28,23 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+      .when('/dock/:dockId', {
+        templateUrl: 'views/dock.html',
+        controller: 'DockCtrl'
+      })
+      .when('/girl/:girlId', {
+        templateUrl: 'views/girl.html',
+        controller: 'GirlCtrl'
+      })
+      .when('/girls', {
+        templateUrl: 'views/girls.html',
+        controller: 'GirlsCtrl'
+      })
+      .when('/girlsstat', {
+        templateUrl: 'views/girlsstat.html',
+        controller: 'GirlsStatCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
   });
-
-angular.module('kanColleViewerMomiApp')
-    .service('SharedObject', function (WS) {
-        console.log("SharedObject created");
-        var Service = {
-            portJson: null,
-            api_start2: null
-        };
-
-        WS.subscribe(function(message){
-            var json = JSON.parse(message);
-            switch (json.api) {
-                case "port":
-                Service.portJson = JSON.parse(message).data;
-                callback("port");
-                break;
-
-                case "api_start2":
-                Service.api_start2Json = JSON.parse(message).data;
-                callback("api_start2");
-                break;
-            }
-        });
-
-        var callbackTable = [];
-        function callback(api) {
-            callbackTable.forEach(function (callbackObj) {
-                if (callbackObj.api == api) {callbackObj.callback();}
-            });
-        }
-
-        Service.hook = function (api, callback) {
-            var callbackObj = new Object();
-            callbackObj.api = api;
-            callbackObj.callback = callback;
-            callbackTable.push(callbackObj);
-        };
-
-        return Service;
-});

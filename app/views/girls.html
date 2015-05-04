@@ -1,0 +1,32 @@
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li class="active">艦娘一覧</li>
+</ol>
+
+<div class="panel panel-default">
+  <div class="panel-heading">艦娘一覧</div>
+  <div class="panel-body">
+    <p>...</p>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th ng-repeat="(i,th) in head" ng-click="changeSorting(i)" ng-class="selectedCls(i)">{{th}} <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" ng-show="sort.column == i && !sort.descending"></span><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="sort.column == i && sort.descending"></span></th>
+    </tr>
+    <tr ng-repeat="row in body | orderBy:sort.column:sort.descending">
+      <td ng-class="selectedCls('a')"><!-- ID -->{{row.a}}</td>
+      <td ng-class="selectedCls('b')"><!-- 艦種 -->{{row.b}}</td>
+      <td ng-class="selectedCls('c')"><!-- 艦名 --><a href="#/girl/{{row.a}}">{{row.c}}</a></td>
+      <td ng-class="selectedCls('d')"><!-- LV. -->{{row.d}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'e',success: row.e > 49 }"><!-- Cond. -->{{row.e}}</td>
+      <td ng-class="selectedCls('f')"><!-- HP -->{{row.f}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'g',success: row.kyoukaMaxFlag.hougeki }"><!-- 火力 -->{{row.g}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'h',success: row.kyoukaMaxFlag.raigeki }"><!-- 雷装 -->{{row.h}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'i',success: row.kyoukaMaxFlag.taiku }"><!-- 対空 -->{{row.i}}</td>
+      <td ng-class="{ active: $scope.sort.column == 'j',success: row.kyoukaMaxFlag.soukou }"><!-- 装甲 -->{{row.j}}</td>
+      <td ng-class="selectedCls('k')"><!-- 運 -->{{row.k}}</td>
+      <td ng-class="selectedCls('l')"><!-- 索敵 -->{{row.l}}</td>
+      <td ng-class="selectedCls('m')"><!-- 制空 -->{{row.m}}</td>
+    </tr>
+  </table>
+</div>

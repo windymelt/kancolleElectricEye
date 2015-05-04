@@ -3,21 +3,12 @@
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
         <li class="active"><a ng-href="#">総合</a></li>
-        <li><a href="#/report/">報告</a></li>
-        <li><a href="#">状況</a></li>
-        <li><a href="#">Export</a></li>
+        <li><a href="#/girlsstat/">統計</a></li>
+        <li><a href="#/girls">艦娘一覧</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="">入渠ドック<span class="badge">{{fleetsFixDockCount}}</span></a></li>
-        <li><a href="">建造ドック</a></li>
-        <li><a href="">ほげほげ</a></li>
-        <li><a href="">Another nav item</a></li>
-        <li><a href="">More navigation</a></li>
-      </ul>
-      <ul class="nav nav-sidebar">
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
+        <li class="disabled"><a href="">入渠ドック<span class="badge">{{fleetsFixDockCount}}</span></a></li>
+        <li class="disabled"><a href="">建造ドック</a></li>
       </ul>
     </div>
 
@@ -33,34 +24,62 @@
     </button>
   </div>
 
-  <h4>Kanmusu</h4>
+  <div>
+    <div class="panel">
+      <div class="dropdown">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+          <input type="text" class="form-control" data-toggle="dropdown" aria-expanded="true" placeholder="32号対水上電探, 最上, etc." aria-describedby="basic-addon1" ng-keyup="inc.searchKeyUp()" ng-model="inc.searchString" id="incremental-search-box" >
+          <ul class="dropdown-menu" role="menu" ng-show="inc.searching" aria-labelledby="incremental-search-box">
+            <li role="presentation" class="dropdown-header">艦娘</li>
+            <li role="presentation" ng-repeat="girl in inc.girls"><a role="menuitem" tabindex="-1" href="#/girl/{{girl.id}}">#{{girl.id}}: {{girl.name}}</a></li>
+            <li role="presentation" class="dropdown-header">装備</li>
+            <li role="presentation" ng-repeat="item in inc.slotItems"><a role="menuitem" tabindex="-1" href="#/girl/{{item.owner.id}}">#{{item.itemId}}: {{item.name}} （{{item.owner.name}}）</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>艦隊</h4>
   <p>
     <div class="container-fluid">
-      teitoku: {{teitokuName}}
+      <article><p>{{teitokuName}} 提督</p></article>
+      <div class="btn-group" role="group" aria-label="HP unit">
+        <button type="button" class="btn btn-default" ng-click="hpUnit = -hpUnit">HP unit</button>
+      </div>
       <div class="row">
-        <div class="col-md-3 panel panel-success" ng-repeat="dock in docks">
-          <div class="panel-heading">
-            <h4 class="panel-title">{{dock.name}}</h4>
-          </div>
-          <div class="panel-body">
-            <div ng-repeat="fleet in dock.ships">
-              {{fleet.name}} (lv. {{fleet.lv}})
-              <span ng-if="fleet.needFuelSupply" class="label label-warning">Fuel</span>
-              <span ng-if="fleet.needAmmoSupply" class="label label-warning">Ammo</span>
-              <div class="progress">
-                <div ng-if="fleet.isOnFix" class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
-                     aria-valuemin="0" aria-valuemax="100" style="width: {{fleet.hpPercent}}%;">
-                  {{fleet.hpPercent}}% - {{fleet.fixTime}}
+        <div class="col-md-3" ng-repeat="dock in docks">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <a href="#/dock/{{dock.id}}"><h4 class="panel-title">{{dock.name}} <span class="label label-default">制空: {{dock.airSperiorityIndex}}</span><span class="label label-danger" ng-show="dock.isOnFix">Fix</span> <span class="label label-info" ng-show="dock.isOnMission">Mission</span></h4></a>
+            </div>
+            <div class="panel-body">
+              <div ng-repeat="fleet in dock.ships">
+                <a href="#/girl/{{fleet.id}}">{{fleet.name}} (lv. {{fleet.lv}})</a>
+                <div>
+                  <span class="label label-default">制空: {{fleet.airSperiorityIndex}}</span>
+                  <span class="label" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49, 'label-default': fleet.cond == 49 }">Cond: {{fleet.cond}}</span>
+                  <span ng-if="fleet.needFuelSupply" class="label label-warning">Fuel</span>
+                  <span ng-if="fleet.needAmmoSupply" class="label label-warning">Ammo</span>
                 </div>
-                <div
-                   ng-class="{'progress-bar-danger': fleet.hpPercent < 33, 'progress-bar-warning': fleet.hpPercent >= 33 && fleet.hpPercent < 75}"
-                   ng-if="!fleet.isOnFix" class="progress-bar" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
-                   aria-valuemin="0" aria-valuemax="100" style="width: {{fleet.hpPercent}}%;">
-                  {{fleet.hpPercent}}%
+                <br />
+                <div class="progress">
+                  <div ng-if="fleet.isOnFix" class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="100"
+                       aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                    {{fleet.fixTime}}
+                  </div>
+                  <div
+                    ng-class="{'progress-bar-danger': fleet.hpPercent < 33, 'progress-bar-warning': fleet.hpPercent >= 33 && fleet.hpPercent < 75}"
+                    ng-if="!fleet.isOnFix" class="progress-bar" role="progressbar" aria-valuenow="{{fleet.hpPercent}}"
+                    aria-valuemin="0" aria-valuemax="100" style="min-width: 4em; width: {{fleet.hpPercent}}%;">
+                    <span ng-if="hpUnit == 1" >{{fleet.hp}} / {{fleet.maxHp}}</span>
+                    <span ng-if="hpUnit == -1">{{fleet.hpPercent}}%</span>
+                  </div>
                 </div>
               </div>
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>
