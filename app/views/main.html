@@ -55,7 +55,7 @@
               <a href="#/dock/{{dock.id}}"><h4 class="panel-title">
                 {{dock.name}}
                 <span class="label label-default">制空: {{dock.airSperiorityIndex}}</span>
-                <span class="label label-danger" ng-show="dock.isOnFix"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></span>
+                <span class="label label-danger" ng-show="dock.isOnFix" title="入渠中の艦娘がいます"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></span>
                 <span class="label label-info" ng-show="dock.isOnMission">Mission</span>
               </h4></a>
             </div>
