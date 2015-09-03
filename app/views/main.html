@@ -61,8 +61,8 @@
             </div>
             <div class="panel-body">
               <div ng-repeat="fleet in dock.ships">
-                <a href="#/girl/{{fleet.id}}">{{fleet.name}} (lv. {{fleet.lv}})</a>
                 <div>
+                  <a href="#/girl/{{fleet.id}}">{{fleet.name}} (lv. {{fleet.lv}})</a>
                   <span class="label label-default" ng-show="fleet.airSperiorityIndex > 0" title="制空値は{{fleet.airSperiorityIndex}}です"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> {{fleet.airSperiorityIndex}}</span>
                   <span class="label" ng-hide="fleet.cond == 49" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49 }" title="コンディション値は{{fleet.cond}}です"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> {{fleet.cond}}</span>
                   <span ng-if="fleet.needFuelSupply" class="label label-warning" title="燃料が減少しています"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span></span>
