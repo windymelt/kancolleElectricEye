@@ -28,8 +28,8 @@
             ng-class="{'progress-bar-danger': girl.hpPercent < 33, 'progress-bar-warning': girl.hpPercent >= 33 && girl.hpPercent < 75}"
             ng-if="!girl.isOnFix" class="progress-bar" role="progressbar" aria-valuenow="{{girl.hpPercent}}"
             aria-valuemin="0" aria-valuemax="100" style="min-width: 4em; width: {{girl.hpPercent}}%;">
-            <span ng-if="hpUnit == 1" >{{girl.hp}} / {{girl.maxHp}}</span>
-            <span ng-if="hpUnit == -1">{{girl.hpPercent}}%</span>
+            <span ng-if="hpUnit == 1" ><b>{{girl.hp}}</b><sub ng-show="girl.hp != girl.maxHp"> / {{girl.maxHp}}</sub></span>
+            <span ng-if="hpUnit == -1"><b>{{girl.hpPercent}}</b> %</span>
           </div>
         </div>
       </div !-- .col-md-6 -->
