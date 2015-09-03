@@ -3,7 +3,7 @@
   <li>ドック</li>
   <li class="active">{{dockName}}</li>
 </ol>
-<h1>Dock #{{dockId}}: {{dockName}} <span class="label label-danger" ng-show="isOnFix">Fix</span> <span class="label label-info" ng-show="isOnMission">Mission</span></h1>
+<h1>Dock #{{dockId}}: {{dockName}} <span class="label label-danger" ng-show="isOnFix"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></span> <span class="label label-info" ng-show="isOnMission">Mission</span></h1>
 <button type="button" class="btn btn-default" ng-click="hpUnit = -hpUnit">HP unit</button>
 <button type="button" class="btn btn-default" ng-click="invertChartMode();">Each/Sum</button>
 <div class="row">
