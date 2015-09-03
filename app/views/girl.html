@@ -13,7 +13,7 @@
         <span class="label label-success" ng-show="girl.kyoukaMaxFlag.all">Max reinforcement</span>
         <a href="#/dock/{{herDockId}}"><span class="label label-info" ng-hide="herDockId === undefined">Belongs to #{{herDockId + 1}}: {{herDockName}}</span></a>
         <span class="label label-success" ng-show="girl.hp == girl.maxHp">Full HP</span>
-        <span class="label" ng-class="{ 'label-warning': girl.cond < 49 && girl.cond > 19, 'label-danger': girl.cond < 20, 'label-success': girl.cond > 49, 'label-default': girl.cond == 49 }">Cond: {{girl.cond}}</span>
+        <span class="label" ng-class="{ 'label-warning': girl.cond < 49 && girl.cond > 19, 'label-danger': girl.cond < 20, 'label-success': girl.cond > 49, 'label-default': girl.cond == 49 }" title="コンディション値は{{girl.cond}}です"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> {{girl.cond}}</span>
         <span ng-if="girl.needFuelSupply" class="label label-warning" title="燃料が減少しています"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span></span>
         <span ng-if="girl.needAmmoSupply" class="label label-warning" title="弾薬が減少しています"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></span>
       </div !-- .col-md-6 -->
