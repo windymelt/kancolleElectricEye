@@ -6,7 +6,7 @@
 <h1>
   Dock #{{dockId}}: {{dockName}}
   <span class="label label-danger" ng-show="isOnFix" title="入渠中の艦娘がいます"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></span>
-  <span class="label label-info" ng-show="isOnMission">Mission</span>
+  <span class="label label-info" ng-show="isOnMission" title="遠征に出ています"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></span>
 </h1>
 <button type="button" class="btn btn-default" ng-click="hpUnit = -hpUnit">HP unit</button>
 <button type="button" class="btn btn-default" ng-click="invertChartMode();">Each/Sum</button>
