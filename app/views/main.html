@@ -54,7 +54,7 @@
             <div class="panel-heading">
               <a href="#/dock/{{dock.id}}"><h4 class="panel-title">
                 {{dock.name}}
-                <span class="label label-default"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> : {{dock.airSperiorityIndex}}</span>
+                <span class="label label-default" title="艦隊の制空値は{{dock.airSperiorityIndex}}です"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> {{dock.airSperiorityIndex}}</span>
                 <span class="label label-danger" ng-show="dock.isOnFix" title="入渠中の艦娘がいます"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></span>
                 <span class="label label-info" ng-show="dock.isOnMission" title="遠征に出ています"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span></span>
               </h4></a>
@@ -63,7 +63,7 @@
               <div ng-repeat="fleet in dock.ships">
                 <a href="#/girl/{{fleet.id}}">{{fleet.name}} (lv. {{fleet.lv}})</a>
                 <div>
-                  <span class="label label-default"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> : {{fleet.airSperiorityIndex}}</span>
+                  <span class="label label-default" ng-show="fleet.airSperiorityIndex > 0" title="制空値は{{fleet.airSperiorityIndex}}です"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> {{fleet.airSperiorityIndex}}</span>
                   <span class="label" ng-hide="fleet.cond == 49" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49 }" title="コンディション値は{{fleet.cond}}です"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> {{fleet.cond}}</span>
                   <span ng-if="fleet.needFuelSupply" class="label label-warning" title="燃料が減少しています"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span></span>
                   <span ng-if="fleet.needAmmoSupply" class="label label-warning" title="弾薬が減少しています"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></span>
