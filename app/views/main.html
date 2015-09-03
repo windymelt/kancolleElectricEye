@@ -64,7 +64,7 @@
                 <a href="#/girl/{{fleet.id}}">{{fleet.name}} (lv. {{fleet.lv}})</a>
                 <div>
                   <span class="label label-default"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> : {{fleet.airSperiorityIndex}}</span>
-                  <span class="label" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49, 'label-default': fleet.cond == 49 }">Cond: {{fleet.cond}}</span>
+                  <span class="label" ng-hide="fleet.cond == 49" ng-class="{ 'label-warning': fleet.cond < 49 && fleet.cond > 19, 'label-danger': fleet.cond < 20, 'label-success': fleet.cond > 49 }">Cond: {{fleet.cond}}</span>
                   <span ng-if="fleet.needFuelSupply" class="label label-warning" title="燃料が減少しています"><span class="glyphicon glyphicon-tint" aria-hidden="true"></span></span>
                   <span ng-if="fleet.needAmmoSupply" class="label label-warning" title="弾薬が減少しています"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></span>
                 </div>
