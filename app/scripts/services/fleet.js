@@ -68,6 +68,25 @@ angular.module('kanColleViewerMomiApp')
             return herData;
         }
 
+        function generateNDockObjectArrayFromAPI(api_ndock) {
+            var tempArr = [];
+            api_ndock.forEach(function (elem, i_elem) {
+                var tempObj = {};
+                console.log(elem);
+                tempObj.id = elem.api_id;
+                if (elem.api_state == 0) {
+                    tempObj.status = 'empty';
+                    } else if (elem.api_state == 1) {
+                        tempObj.status = 'on dock';
+                        tempObj.shipID = elem.api_ship_id;
+                        tempObj.completeTime = elem.api_complete_time;
+                        tempObj.completeTimeStr = elem.api_complete_time_str;
+                    }
+                tempArr.push(tempObj);
+            });
+            return tempArr;
+        }
+
         function calculateAirSperiorityIndex(girlId) {
             if (girlId == -1) { return 0; }
             if (SharedObject.slot_itemJson == null) { return undefined; }
@@ -127,6 +146,7 @@ angular.module('kanColleViewerMomiApp')
             generateFleetObjectFromAPIFleet: generateFleetObjectFromAPIFleet,
             calculateAirSperiorityIndex: calculateAirSperiorityIndex,
             calculateAirSperiorityIndexFromGirls: calculateAirSperiorityIndexFromGirls,
-            generateSlotItemsDescription: generateSlotItemsDescription
+            generateSlotItemsDescription: generateSlotItemsDescription,
+            generateNDockObjectArrayFromAPI: generateNDockObjectArrayFromAPI
         };
     });

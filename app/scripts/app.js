@@ -44,6 +44,10 @@ angular
         templateUrl: 'views/girlsstat.html',
         controller: 'GirlsStatCtrl'
       })
+      .when('/ndocks', {
+        templateUrl: 'views/ndocks.html',
+        controller: 'NDockCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
