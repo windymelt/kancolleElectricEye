@@ -13,7 +13,6 @@
     "angular-touch": "~1.2.0",
     "angular-route": "~1.2.0",
     "angular-ui-bootstrap-bower": "~0.11.2",
-    "angular-timer": "~1.1.7",
     "reconnecting-websocket": "joewalnes/reconnecting-websocket",
     "Chart.js": "~1.0.1"
   },
