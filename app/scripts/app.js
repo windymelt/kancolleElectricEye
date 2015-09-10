@@ -48,6 +48,11 @@ angular
         templateUrl: 'views/ndocks.html',
         controller: 'NDockCtrl'
       })
+      .when('/mission', {
+        templateUrl: 'views/mission.html',
+        controller: 'MissionCtrl',
+        controllerAs: 'mission'
+      })
       .otherwise({
         redirectTo: '/'
       });
