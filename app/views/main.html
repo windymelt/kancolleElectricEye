@@ -34,7 +34,7 @@
             <li role="presentation" class="dropdown-header">艦娘</li>
             <li role="presentation" ng-repeat="girl in inc.girls"><a role="menuitem" tabindex="-1" href="#/girl/{{girl.id}}">#{{girl.id}}: {{girl.name}}</a></li>
             <li role="presentation" class="dropdown-header">装備</li>
-            <li role="presentation" ng-repeat="item in inc.slotItems"><a role="menuitem" tabindex="-1" href="#/girl/{{item.owner.id}}">#{{item.itemId}}: {{item.name}} （{{item.owner.name}}）</a></li>
+            <li role="presentation" ng-repeat="item in inc.slotItems"><a role="menuitem" tabindex="-1" href="#/girl/{{item.owner.id}}">{{item.name}} <span ng-show="item.owner.name !== undefined"> - <span ng-hide="item.dockIdOwnerBelongsTo === undefined" class="label label-primary">{{item.dockIdOwnerBelongsTo + 1}}</span> {{item.owner.name}}</span></a></li>
           </ul>
         </div>
       </div>

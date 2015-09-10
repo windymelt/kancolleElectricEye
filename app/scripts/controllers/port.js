@@ -116,7 +116,9 @@ angular.module('kanColleViewerMomiApp')
               for (var typeId in matchedSlotItems){
                   matchedSlotItems[typeId].forEach(function (item) {
                       var owner = ShipMap.findSlotItemOwnerByItemId(item);
-                      slotItemsNameIdGirl.push({name: ShipMap.getItemStatus(typeId).api_name, owner: Fleet.generateFleetObjectFromAPIFleet(owner), typeId: typeId, itemId: item});
+                      var ownerObject = Fleet.generateFleetObjectFromAPIFleet(owner);
+                      var dockIdOwnerBelongsTo = ownerObject !== undefined ? ShipMap.getDockIdSheBelongsTo(ownerObject.id) : undefined;
+                      slotItemsNameIdGirl.push({name: ShipMap.getItemStatus(typeId).api_name, owner: ownerObject, typeId: typeId, itemId: item, dockIdOwnerBelongsTo: dockIdOwnerBelongsTo});
                   });
               }
 
