@@ -45,7 +45,7 @@ angular.module('kanColleViewerMomiApp')
           }, 1000);
           $scope.reserve = function (ndockId) {
               console.log("reserve " + ndockId);
-              var time = $scope.ndocks[ndockId - 1].completeTime;
+              var time = $scope.ndocks[ndockId - 1].completeTime - 60;
               var params = {
                       at: time,
                       title: "入渠",
