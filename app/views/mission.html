@@ -1,1 +1,30 @@
-<p>This is the mission view.</p>
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li>遠征</li>
+</ol>
+
+<h1>遠征</h1>
+
+<div class="row">
+  <div ng-if="dock.isOnMission" class="col-md-3"  ng-repeat="dock in docks">
+    <div class="panel" ng-class="{ 'panel-default': true, 'panel-primary': false }">
+      <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> <span class="label label-primary">{{dock.id + 1}}</span></h4></div>
+      <div class="panel-body">
+        <div ng-show="dock.status === 'empty'">ドックは空です。</div>
+        <p>{{dock.area}}: {{dock.missionDescription}}, {{dock.progressPercentage}} %</p>
+        <div class="progress" ng-if="true">
+          <div ng-class="{ 'disabled': false }" class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{dock.lastingTime}}"
+               aria-valuemin="0" aria-valuemax="{{dock.missionTime}}" style="width: {{dock.progressPercentage}}%;">
+            {{dock.lastingTime | msecsToTimeString}}
+          </div>
+        </div>
+        <div>
+          <button type="button" ng-class="{ 'disabled': false }" class="btn btn-default reserve-button" ng-click="reserve({{dock.id}})">
+            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            XMPP Reservation
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

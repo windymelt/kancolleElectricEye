@@ -49,6 +49,11 @@ angular.module('kanColleViewerMomiApp')
           $scope.docks = generateDockArray(SharedObject.portJson);
           $scope.fleetsFixDockCount = ShipMap.countFleetsOnFix();
 
+          $scope.missionDocksCount = 0;
+          [0, 1, 2, 3].forEach(function (i) {
+              if (SharedObject.portJson.api_data.api_deck_port[i].api_mission[0] != 0) { $scope.missionDocksCount++; }
+          });
+
           $scope.$apply();
       }
 
